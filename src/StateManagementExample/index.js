@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Form from './Form'
 
 class StateManagementExample extends Component {
+  /* Your Local State as the data source  */
   state = {
     data: [
       { id: 1, name: 'Final Fantasy 7 Remake' },
@@ -10,6 +11,7 @@ class StateManagementExample extends Component {
     ]
   }
 
+  /* Function to Append data to the state */
   handleAdd = (text) => {
     this.setState(prevState => ({
       data: prevState.data.concat({
@@ -19,14 +21,15 @@ class StateManagementExample extends Component {
     }))
   }
 
+  /* Function to Remove data from the state */
   handleRemove = (record) => {
-    console.log(record)
     this.setState(prevState => ({
       data: prevState.data.filter(item => item.id !== record.id)
     }))
   }
 
   render () {
+    /* passes this.state.data to Form for rendering data */
     const { data } = this.state
     return (
       <Form
