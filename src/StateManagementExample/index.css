@@ -1,0 +1,8 @@
+.outer-row {
+  padding: 20px;
+}
+
+.inner-row {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
