@@ -1,32 +1,47 @@
 import React, { Component } from 'react'
+import { Query, compose, graphql } from 'react-apollo'
+import GAME from '../api/Game'
 import Form from './Form'
 
 class StateManagementExample extends Component {
   /* Your Local State as the data source  */
   state = {
-    data: [
-      { id: 1, name: 'Final Fantasy 7 Remake' },
-      { id: 2, name: 'The Last of Us 2' },
-      { id: 3, name: 'Death Stranding' },
-    ],
     nightmode: false
   }
 
-  /* Function to Append data to the state */
+  /* POST new game */
   handleAdd = (text) => {
-    this.setState(prevState => ({
-      data: prevState.data.concat({
-        id: prevState.data.length + 1,
+    const { addGame } = this.props
+
+    /* Variable values should be wrapped in { input } object */
+    const variables = {
+      input: {
         name: text
+      }
+    }
+
+    addGame({ variables })
+      .then((res) => {
+        console.log('Added Game: ', res)
       })
-    }))
+      .catch((err) => {
+        console.log('Error adding game: ', err)
+      })
   }
 
-  /* Function to Remove data from the state */
+  /* DELETE game */
   handleRemove = (record) => {
-    this.setState(prevState => ({
-      data: prevState.data.filter(item => item.id !== record.id)
-    }))
+    const { removeGame } = this.props
+
+    const variables = { id: record.id }
+
+    removeGame({ variables })
+      .then((res) => {
+        console.log('Removed Game: ', res)
+      })
+      .catch((err) => {
+        console.log('Error removing game: ', {err})
+      })
   }
 
   /* Function to toggle nightmode value */
@@ -36,18 +51,47 @@ class StateManagementExample extends Component {
   }
 
   render () {
-    /* passes this.state.data to Form for rendering data */
-    const { data, nightmode } = this.state
+    const { nightmode } = this.state
     return (
-      <Form
-        data={data}
-        nightmode={nightmode}
-        handleNightMode={this.handleNightMode}
-        handleRemove={this.handleRemove}
-        handleAdd={this.handleAdd}
-      />
+      <Query query={GAME.list}>
+        {({ loading, error, data }) => {
+          if (error) return null
+          if (loading) return (<h1> Loading </h1>)
+
+          const { games: { payload: { games } } } = data
+
+          return (
+            <Form
+              data={games}
+              nightmode={nightmode}
+              handleNightMode={this.handleNightMode}
+              handleRemove={this.handleRemove}
+              handleAdd={this.handleAdd}
+            />
+          )
+        }}
+      </Query>
     )
   }
 }
 
-export default StateManagementExample
+export default compose(
+  graphql(
+    GAME.add,
+    {
+      name: 'addGame',
+      options: {
+        refetchQueries: [{ query: GAME.list }]
+      }
+    }
+  ),
+  graphql(
+    GAME.remove,
+    {
+      name: 'removeGame',
+      options: {
+        refetchQueries: [{ query: GAME.list }]
+      }
+    }
+  ),
+)(StateManagementExample)
