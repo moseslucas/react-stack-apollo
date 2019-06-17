@@ -8,7 +8,8 @@ class StateManagementExample extends Component {
       { id: 1, name: 'Final Fantasy 7 Remake' },
       { id: 2, name: 'The Last of Us 2' },
       { id: 3, name: 'Death Stranding' },
-    ]
+    ],
+    nightmode: false
   }
 
   /* Function to Append data to the state */
@@ -28,12 +29,20 @@ class StateManagementExample extends Component {
     }))
   }
 
+  /* Function to toggle nightmode value */
+  handleNightMode = () => {
+    const { nightmode } = this.state
+    this.setState({ nightmode: !nightmode })
+  }
+
   render () {
     /* passes this.state.data to Form for rendering data */
-    const { data } = this.state
+    const { data, nightmode } = this.state
     return (
       <Form
         data={data}
+        nightmode={nightmode}
+        handleNightMode={this.handleNightMode}
         handleRemove={this.handleRemove}
         handleAdd={this.handleAdd}
       />

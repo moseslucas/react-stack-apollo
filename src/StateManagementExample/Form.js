@@ -5,14 +5,17 @@ import {
   Table,
   Typography,
   Col,
-  Row
+  Row,
+  Switch,
 } from 'antd';
 import './index.css'
 
 const Form = ({
   handleAdd,
   handleRemove,
-  data
+  data,
+  handleNightMode,
+  nightmode
 }) => {
 
   /* columns */
@@ -36,19 +39,37 @@ const Form = ({
     }
   ]
 
+  const bg = nightmode ? '#1e1e1e' : '#fff'
+  const fontColor = nightmode ? '#fff' : '#000'
+
   /* render form */
   return (
-    <Row className='outer-row'>
-      <Row className='inner-row'>
+    <Row
+      className='outer-row'
+    >
+      <Row className='inner-row' style={{ background: bg }}>
         <Col lg={{ span: 8, offset: 8 }} md={{ span: 12 }}>
-        <Typography.Title level={2} style={{ textAlign: 'center' }}>
-          REACT STACK / APOLLO
-        </Typography.Title>
+          <Typography.Title
+            level={2}
+            className='title'
+            style={{ color: fontColor }}
+          >
+            REACT STACK / APOLLO
+          </Typography.Title>
+          <div className='nightmode'>
+            <label style={{ color: fontColor }}> NIGHT MODE </label>
+            <Switch
+              checkedChildren="ON"
+              unCheckedChildren="OFF"
+              onChange={handleNightMode}
+            />
+          </div>
           <Input.Search
             enterButton='Add'
             size='large'
             placeholder='Input New Game Title'
             onSearch={ text => handleAdd(text) }
+            style={{ color: fontColor }}
           />
         </Col>
       </Row>
