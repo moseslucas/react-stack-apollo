@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Query, compose, graphql } from 'react-apollo'
+
 import GAME from '../api/Game'
+import STORE_QUERIES from '../store/queries'
+import STORE_MUTATIONS from '../store/mutations'
 import Form from './Form'
 
 class Sample extends Component {
@@ -44,14 +47,14 @@ class Sample extends Component {
       })
   }
 
-  /* Function to toggle nightmode value */
+  /* Toggle nightMode */
   handleNightMode = () => {
-    const { nightmode } = this.state
-    this.setState({ nightmode: !nightmode })
+    const { nightMode, updateNightMode } = this.props
+    updateNightMode({ variables: { nightMode: !nightMode } })
   }
 
   render () {
-    const { nightmode } = this.state
+    const { nightMode } = this.props
     return (
       <Query query={GAME.list}>
         {({ loading, error, data }) => {
@@ -63,7 +66,7 @@ class Sample extends Component {
           return (
             <Form
               data={games}
-              nightmode={nightmode}
+              nightMode={nightMode}
               handleNightMode={this.handleNightMode}
               handleRemove={this.handleRemove}
               handleAdd={this.handleAdd}
@@ -94,4 +97,16 @@ export default compose(
       }
     }
   ),
+  graphql(
+    STORE_MUTATIONS.updateNightMode,
+    { name: 'updateNightMode' }
+  ),
+  graphql(
+    STORE_QUERIES.nightMode,
+    {
+      props: ({ data: { nightMode } }) => ({
+        nightMode
+      })
+    }
+  )
 )(Sample)

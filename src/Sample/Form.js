@@ -16,7 +16,7 @@ const Form = ({
   handleRemove,
   data,
   handleNightMode,
-  nightmode
+  nightMode
 }) => {
 
   /* columns */
@@ -40,8 +40,8 @@ const Form = ({
     }
   ]
 
-  const bg = nightmode ? '#1e1e1e' : '#fff'
-  const fontColor = nightmode ? '#fff' : '#000'
+  const bg = nightMode ? '#1e1e1e' : '#fff'
+  const fontColor = nightMode ? '#fff' : '#000'
 
   /* render form */
   return (
@@ -55,12 +55,13 @@ const Form = ({
           >
             REACT STACK / APOLLO
           </Typography.Title>
-          <div className='nightmode'>
+          <div className='nightMode'>
             <label style={{ color: fontColor }}> NIGHT MODE </label>
             <Switch
               checkedChildren="ON"
               unCheckedChildren="OFF"
               onChange={handleNightMode}
+              defaultChecked={nightMode}
             />
           </div>
           <Input.Search
