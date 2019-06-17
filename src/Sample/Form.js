@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import {
   Button,
   Input,
@@ -44,9 +45,7 @@ const Form = ({
 
   /* render form */
   return (
-    <Row
-      className='outer-row'
-    >
+    <Row className='outer-row'>
       <Row className='inner-row' style={{ background: bg }}>
         <Col lg={{ span: 8, offset: 8 }} md={{ span: 12 }}>
           <Typography.Title
@@ -81,6 +80,9 @@ const Form = ({
           />
         </Col>
       </Row>
+      <Link to="page-using-apollo-state">
+        Go to Page using Apollo state
+      </Link>
     </Row>
   )
 

@@ -3,7 +3,7 @@ import { Query, compose, graphql } from 'react-apollo'
 import GAME from '../api/Game'
 import Form from './Form'
 
-class StateManagementExample extends Component {
+class Sample extends Component {
   /* Your Local State as the data source  */
   state = {
     nightmode: false
@@ -94,4 +94,4 @@ export default compose(
       }
     }
   ),
-)(StateManagementExample)
+)(Sample)
