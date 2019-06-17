@@ -7,13 +7,17 @@ import './index.css'
 
 const PageUsingApolloState = ({ nightMode }) => {
   const bg = nightMode ? '#1e1e1e' : '#fff'
+  const fontColor = nightMode ? '#fff' : '#000'
+
   return (
     <div
       className='container'
       style={{ background: bg }}
     >
       <Link to='/sample'>Go to Sample page </Link>
-      <h1> Page Using Apollo State </h1>
+      <h1 style={{ color: fontColor }}>
+        Page Using Apollo State
+      </h1>
     </div>
   )
 }
